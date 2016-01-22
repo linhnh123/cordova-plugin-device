@@ -48,19 +48,20 @@
 
 - (NSString*)uniqueAppInstanceIdentifier:(UIDevice*)device
 {
-    NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
-    static NSString* UUID_KEY = @"CDVUUID";
+    //NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
+    //static NSString* UUID_KEY = @"CDVUUID";
     
     // Check user defaults first to maintain backwards compaitibility with previous versions
     // which didn't user identifierForVendor
-    NSString* app_uuid = [userDefaults stringForKey:UUID_KEY];
-    if (app_uuid == nil) {
-        app_uuid = [[device identifierForVendor] UUIDString];
-        [userDefaults setObject:app_uuid forKey:UUID_KEY];
-        [userDefaults synchronize];
-    }
+    //NSString* app_uuid = [userDefaults stringForKey:UUID_KEY];
+    //if (app_uuid == nil) {
+    //    app_uuid = [[device identifierForVendor] UUIDString];
+    //    [userDefaults setObject:app_uuid forKey:UUID_KEY];
+    //    [userDefaults synchronize];
+    //}
     
-    return app_uuid;
+    //return app_uuid;
+    return [[device identifierForVendor] UUIDString];
 }
 
 - (void)getDeviceInfo:(CDVInvokedUrlCommand*)command
