@@ -68,8 +68,8 @@
     [devProps setObject:[device modelVersion] forKey:@"model"];
     [devProps setObject:@"iOS" forKey:@"platform"];
     [devProps setObject:[device systemVersion] forKey:@"version"];
-    [devProps setObject:[self uniqueAppInstanceIdentifier:device] forKey:@"uuid"];
-    [devProps setObject:[self identifierForVendor:device] forKey:@"identifierForVendor"];
+    //[devProps setObject:[self uniqueAppInstanceIdentifier:device] forKey:@"uuid"];
+    [devProps setObject:[device uniqueAppInstanceIdentifier] forKey:@"uuid"];
     [devProps setObject:[[self class] cordovaVersion] forKey:@"cordova"];
     [devProps setObject:@([self isVirtual]) forKey:@"isVirtual"];
     NSDictionary* devReturn = [NSDictionary dictionaryWithDictionary:devProps];
