@@ -48,19 +48,6 @@
 
 - (NSString*)uniqueAppInstanceIdentifier:(UIDevice*)device
 {
-    //NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
-    //static NSString* UUID_KEY = @"CDVUUID";
-    
-    // Check user defaults first to maintain backwards compaitibility with previous versions
-    // which didn't user identifierForVendor
-    //NSString* app_uuid = [userDefaults stringForKey:UUID_KEY];
-    //if (app_uuid == nil) {
-    //    app_uuid = [[device identifierForVendor] UUIDString];
-    //    [userDefaults setObject:app_uuid forKey:UUID_KEY];
-    //    [userDefaults synchronize];
-    //}
-    
-    //return app_uuid;
     return [[device identifierForVendor] UUIDString];
 }
 
@@ -82,6 +69,7 @@
     [devProps setObject:@"iOS" forKey:@"platform"];
     [devProps setObject:[device systemVersion] forKey:@"version"];
     [devProps setObject:[self uniqueAppInstanceIdentifier:device] forKey:@"uuid"];
+    [devProps setObject:[self identifierForVendor:device] forKey:@"identifierForVendor"];
     [devProps setObject:[[self class] cordovaVersion] forKey:@"cordova"];
     [devProps setObject:@([self isVirtual]) forKey:@"isVirtual"];
     NSDictionary* devReturn = [NSDictionary dictionaryWithDictionary:devProps];
