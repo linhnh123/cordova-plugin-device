@@ -48,7 +48,16 @@
 
 - (NSString*)uniqueAppInstanceIdentifier:(UIDevice*)device
 {
-    return [[device identifierForVendor] UUIDString];
+    NSString *appName=[[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString*)kCFBundleNameKey];
+
+    NSString *strApplicationUUID = [SSKeychain passwordForService:appName account:@"incoding"];
+    if (strApplicationUUID == nil)
+    {
+       strApplicationUUID  = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+       [SSKeychain setPassword:strApplicationUUID forService:appName account:@"incoding"];
+    }
+   
+    return strApplicationUUID;
 }
 
 - (void)getDeviceInfo:(CDVInvokedUrlCommand*)command
@@ -68,8 +77,7 @@
     [devProps setObject:[device modelVersion] forKey:@"model"];
     [devProps setObject:@"iOS" forKey:@"platform"];
     [devProps setObject:[device systemVersion] forKey:@"version"];
-    //[devProps setObject:[self uniqueAppInstanceIdentifier:device] forKey:@"uuid"];
-    [devProps setObject:[device uniqueAppInstanceIdentifier] forKey:@"uuid"];
+    [devProps setObject:[self uniqueAppInstanceIdentifier:device] forKey:@"uuid"];
     [devProps setObject:[[self class] cordovaVersion] forKey:@"cordova"];
     [devProps setObject:@([self isVirtual]) forKey:@"isVirtual"];
     NSDictionary* devReturn = [NSDictionary dictionaryWithDictionary:devProps];
